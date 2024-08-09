@@ -1,7 +1,7 @@
 import logging
 import os
 import glob
-from robocorp import browser
+import traceback
 from datetime import datetime
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -25,13 +25,12 @@ class CustomSelenium:
         )
 
     def set_chrome_options(self):
-        browser.configure(
-	        browser_engine="firefox",
-	        headless=True,
-        )
+        options = webdriver.ChromeOptions()
+        #options.add_experimental_option("detach", True)
+        return options
 
     def set_web_driver(self):
-        self.driver = webdriver.Firefox()
+        self.driver = webdriver.Chrome(options=self.set_chrome_options())
 
     def open_url(self, url: str):
         self.driver.get(url)
